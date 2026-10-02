@@ -1,6 +1,28 @@
 # MEBSociety
 
+[![PocketMine-MP](https://img.shields.io/badge/PocketMine--MP-5.0-blue)](https://github.com/pmmp/PocketMine-MP)
+[![PHP](https://img.shields.io/badge/PHP-8.0%2B-purple)](https://www.php.net/)
+[![MEB交流群](https://img.shields.io/badge/MEB交流群-495262926-orange?style=flat-square&logo=tencentqq)](https://qun.qq.com/universal-share/share?ac=1&authKey=HJqOZiQeXeja5NyPiqbfbPPRGX6UdRYf%2FZ8jxAr5B52Bl8a2L4ZqpgQ4%2FZ2JTQ%2BG&busi_data=eyJncm91cENvZGUiOiI0OTUyNjI5MjYiLCJ0b2tlbiI6Imh4Q01pWkpkQVgvekFSK0cwbTJjWU5xdHFBMGJJN01qQVN6SmhRMUZHTmcwRzNBOXpvdlArcW1EaTRNcFI1MEsiLCJ1aW4iOiI4MjU1ODUzOTgifQ%3D%3D&data=_H46ENc_fxiIeBZm8xNKqFoGMVQ2ZbAayO2_xLQ7-24neRXx2M6uoWZqOCk2iPBw_MgYalDv4PNB8uOLvhl3ww&svctype=4&tempid=h5_group_info)
+
 > ⚠️ **Depend**：[MEBForms](https://github.com/MengBaofh/MEBForms)
+
+## 功能特性
+
+### 核心功能
+- ✅ 离线消息
+- ✅ GUI 商店系统（自定义，含营地专属物品市场）
+- ✅ 营地系统（营地等级、捐献池、福利箱与营地专属物品等）
+- ✅ 同居系统
+- ✅ 称号系统
+- ✅ 多世界系统
+- ✅ 经济系统
+- ✅ OP 管理系统
+- ✅ VIP / SVIP 管理系统
+- ✅ 指令禁用系统
+- ✅ 底部显示（自定义）
+- ✅ 聊天格式化（自定义）
+- ✅ 异常数据自动清理
+- ✅ 进服权限异常检测与重置
 
 ## 快速上手
 
@@ -8,36 +30,6 @@
 | --- | --- |
 | `/mebhelp` | 总指令，查看全部帮助 |
 | `/mebui` | 唤醒 GUI 导航（玩家加入服务器会自动发送导航物品） |
-
-## 功能
-
-- GUI 商店系统（自定义，含营地专属物品市场）
-- 离线消息
-- 营地系统（含营地等级、捐献池、福利箱与营地专属物品）
-- 同居系统
-- 称号系统
-- 多世界系统
-- 经济系统
-- OP 管理系统
-- 指令禁用系统
-- VIP / SVIP 管理系统
-- 底部显示（自定义）
-- 聊天格式化（自定义）
-- 进服权限异常检测与重置
-- 自动清除异常数据
-
-## 链接
-
-- 反馈 bug 群：[点击加入](https://qun.qq.com/universal-share/share?ac=1&authKey=HJqOZiQeXeja5NyPiqbfbPPRGX6UdRYf%2FZ8jxAr5B52Bl8a2L4ZqpgQ4%2FZ2JTQ%2BG&busi_data=eyJncm91cENvZGUiOiI0OTUyNjI5MjYiLCJ0b2tlbiI6Imh4Q01pWkpkQVgvekFSK0cwbTJjWU5xdHFBMGJJN01qQVN6SmhRMUZHTmcwRzNBOXpvdlArcW1EaTRNcFI1MEsiLCJ1aW4iOiI4MjU1ODUzOTgifQ%3D%3D&data=_H46ENc_fxiIeBZm8xNKqFoGMVQ2ZbAayO2_xLQ7-24neRXx2M6uoWZqOCk2iPBw_MgYalDv4PNB8uOLvhl3ww&svctype=4&tempid=h5_group_info)
-
-## 常见问题 & 注意事项
-
-<details>
-<summary>点击查看</summary>
-
-1. **None**：None。
-
-</details>
 
 ## 更新日志
 
