@@ -113,11 +113,21 @@ class Shop
     /**
      * 新增物品商品，返回新商品的SID
      * 前提：物品名是否能解析
+     * 支持 NBT 物品（自定义物品）
      */
-    public function addItemShop(string $name, string $itemName, int $num, float $buyPrice, float $sellPrice): int
+    public function addItemShop(string $name, string $itemName, int $num, float $buyPrice, float $sellPrice, ?Item $customItem = null): int
     {
         $SID = $this->getNewSID();
         $shops = $this->getAllShops();
+
+        // 序列化自定义物品（如果提供）
+        $nbtData = null;
+        if ($customItem !== null) {
+            // 直接序列化 NamedTag
+            $nbt = $customItem->getNamedTag();
+            $nbtData = base64_encode(serialize($nbt));
+        }
+
         $shops[$SID] = array(
             "类型" => self::TYPE_ITEM,
             "名称" => $name,
@@ -127,9 +137,10 @@ class Shop
             "购买单价" => $buyPrice,
             "出售单价" => $sellPrice,
             "可购买" => true,
-            "可出售" => $sellPrice > 0,
+            "可出售" => $customItem === null && $sellPrice > 0,  // 自定义物品禁止出售
             "图标类型" => -1,
             "图标" => "",
+            "物品NBT" => $nbtData,
         );
         $this->plugin->shops->setAll($shops);
         $this->plugin->shops->save();
@@ -174,6 +185,24 @@ class Shop
     }
 
     /**
+     * 根据物品名称删除商品（用于MEBCustomItem集成）
+     */
+    public function removeItemShop(string $itemName): bool
+    {
+        $shops = $this->getAllShops();
+        $removed = false;
+
+        foreach ($shops as $sid => $shop) {
+            if ($shop["类型"] === self::TYPE_ITEM && $shop["物品"] === $itemName) {
+                $this->delShop($sid);
+                $removed = true;
+            }
+        }
+
+        return $removed;
+    }
+
+    /**
      * 反转商品的可购买/可出售状态
      * 前提：商品是否存在
      */
@@ -188,6 +217,7 @@ class Shop
 
     /**
      * 把商品的物品名解析成物品，解析不出来则返回null
+     * 支持 NBT 自定义物品
      * 前提：商品是否存在且为物品商品
      */
     public function getShopItem(int $SID, int $times = 1): ?Item
@@ -195,7 +225,34 @@ class Shop
         $shop = $this->getShop($SID);
         if ($shop === null || $shop["类型"] !== self::TYPE_ITEM || $shop["物品"] === null)
             return null;
-        //物品名走StringToItemParser，不用旧版"id:damage"那种写法，PM5下解析不了会抛异常
+
+        // 优先使用 NBT 数据还原自定义物品
+        if (isset($shop["物品NBT"]) && $shop["物品NBT"] !== null && $shop["物品NBT"] !== "") {
+            try {
+                // 创建基础物品
+                $item = StringToItemParser::getInstance()->parse((string) $shop["物品"]);
+                if ($item === null) {
+                    return null;
+                }
+                $item = clone $item;
+
+                // 反序列化 NamedTag
+                $serialized = base64_decode($shop["物品NBT"]);
+                $nbt = unserialize($serialized);
+
+                if ($nbt instanceof \pocketmine\nbt\tag\CompoundTag) {
+                    $item->setNamedTag($nbt);
+                }
+
+                // 设置数量
+                $item->setCount(max(1, (int) $shop["数量"]) * max(1, $times));
+                return $item;
+            } catch (\Exception $e) {
+                // 解析失败，降级到基础物品
+            }
+        }
+
+        // 如果没有 NBT 数据或解析失败，使用基础物品
         $item = StringToItemParser::getInstance()->parse((string) $shop["物品"]);
         if ($item === null)
             return null;
