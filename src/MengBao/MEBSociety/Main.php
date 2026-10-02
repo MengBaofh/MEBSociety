@@ -350,9 +350,9 @@ class Main extends PluginBase
             $this->getLogger()->info("§a已为" . $patched . "个营地补齐等级与捐献池数据。");
         }
 
-        //版本号在配置里也更新一下，方便服主确认自己跑的是哪版
-        if ($this->basicConfig->get("version") !== "2.0.9") {
-            $this->basicConfig->set("version", "2.0.9");
+        //版本号在配置里也更新一下,方便服主确认自己跑的是哪版
+        if ($this->basicConfig->get("version") !== "2.1.0") {
+            $this->basicConfig->set("version", "2.1.0");
             $this->basicConfig->save();
         }
     }
